@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Rose Day Bubu 🌹</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: radial-gradient(circle at top,#ff4e50,#0f0f0f);
+  color:white;
+}
+
+/* Stars background */
+body::before{
+  content:"";
+  position:absolute;
+  width:200%;
+  height:200%;
+  background:radial-gradient(white 1px, transparent 1px);
+  background-size:50px 50px;
+  opacity:0.15;
+  animation:moveStars 60s linear infinite;
+}
+@keyframes moveStars{
+  from{transform:translate(0,0);}
+  to{transform:translate(-500px,-500px);}
+}
+
+/* Glass card */
+.card{
+  position:relative;
+  width:92%;
+  max-width:430px;
+  padding:40px;
+  border-radius:25px;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(18px);
+  box-shadow:0 0 60px rgba(255,255,255,0.25);
+  text-align:center;
+  animation:fadeIn 2s ease;
+}
+
+h1{font-size:34px;margin-bottom:10px}
+h2{font-weight:400;margin-bottom:15px}
+
+#typeText{
+  min-height:70px;
+  font-size:18px;
+  line-height:1.6;
+  margin-bottom:15px;
+}
+
+/* Button */
+button{
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  font-size:16px;
+  font-weight:bold;
+  color:#ff4e50;
+  background:white;
+  cursor:pointer;
+  transition:.3s;
+}
+button:hover{transform:scale(1.1)}
+
+#hiddenMessage{
+  display:none;
+  margin-top:20px;
+  font-size:20px;
+  animation:pop 0.8s ease forwards;
+}
+
+/* Heart beat */
+.heart{
+  font-size:28px;
+  animation:beat 1s infinite;
+}
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.3)}
+}
+
+/* Roses floating */
+.rose{
+  position:absolute;
+  font-size:22px;
+  animation:float 9s linear infinite;
+  opacity:0.85;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) rotate(0)}
+  100%{transform:translateY(-10vh) rotate(360deg)}
+}
+
+/* Sparkles */
+.spark{
+  position:absolute;
+  width:6px;height:6px;
+  background:white;
+  border-radius:50%;
+  animation:sparkle 1s linear forwards;
+}
+@keyframes sparkle{
+  to{transform:translateY(-80px);opacity:0}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes pop{
+  from{transform:scale(0)}
+  to{transform:scale(1)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" onclick="createSpark(event)">
+  <h1>Happy Rose Day 🌹</h1>
+  <h2>My Dearest Bubu</h2>
+
+  <div id="typeText"></div>
+
+  <button onclick="showMsg()">Open My Heart 💖</button>
+
+  <div id="hiddenMessage">
+    <div class="heart">❤️</div>
+    Bubu, you are my today, my tomorrow and my forever.
+  </div>
+</div>
+
+<script>
+// Typewriter effect
+const text = "Like roses make gardens beautiful, you make my life beautiful every single day.";
+let i=0;
+function typeWriter(){
+  if(i<text.length){
+    document.getElementById("typeText").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeWriter,40);
+  }
+}
+typeWriter();
+
+// Show message
+function showMsg(){
+  document.getElementById("hiddenMessage").style.display="block";
+}
+
+// Floating roses
+for(let i=0;i<35;i++){
+  let r=document.createElement("div");
+  r.className="rose";
+  r.innerHTML="🌹";
+  r.style.left=Math.random()*100+"vw";
+  r.style.fontSize=(20+Math.random()*25)+"px";
+  r.style.animationDuration=(6+Math.random()*6)+"s";
+  document.body.appendChild(r);
+}
+
+// Sparkle effect on click
+function createSpark(e){
+  for(let i=0;i<8;i++){
+    let s=document.createElement("div");
+    s.className="spark";
+    s.style.left=e.clientX+"px";
+    s.style.top=e.clientY+"px";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1000);
+  }
+}
+</script>
+
+</body>
+</html>
